@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List Advance</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div id="login-container" class="">
+        <h1>Login</h1>
+
+        <form action="" id="login-form">
+            <div class="input-container">
+                <label for="username-input-login" class="label-login-register">Username</label>
+                <input type="text" name="username-input-login" id="username-input-login" placeholder="Masukkan username..." class="input" required>
+            </div>
+            <div class="input-container">
+                <label for="password-input-login">Password</label>
+                <input type="password" name="password-input-login" id="password-input-login" placeholder="Masukkan password..." class="input" required>
+            </div>
+
+            <button id="login-btn" type="submit">Login</button>
+        </form>
+
+        <h4 id="text-register-acc">Belum punya akun? Daftar di sini</h4>
+    </div>
+
+    <div id="register-container" class="hidden">
+        <h1>Register</h1>
+
+        <form action="" id="register-form">
+            <div class="input-container">
+                <label for="username-input-register">Username</label>
+                <input type="text" name="username-input-register" id="username-input-register" placeholder="Masukkan username..." class="input" required>
+            </div>
+            <div class="input-container">
+                <label for="password-input-register">Password</label>
+                <input type="password" name="password-input-register" id="password-input-register" placeholder="Masukkan password..." class="input" required>
+            </div>
+
+            <button id="register-btn" type="submit">Register</button>
+        </form>
+
+        <h4 id="text-login-acc">Sudah punya akun? Login di sini</h4>
+    </div>
+
+    <div id="notification">
+        <h4 id="notification-message">btes</h4>
+    </div>
+
+    <script type="module" src="assets/js/auth.js"></script>
+</body>
+</html>
