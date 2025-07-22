@@ -1,0 +1,47 @@
+:root {
+  --bg-main: #F5F5F5;
+  --bg-container: #FFFFFF;
+  --text-main: #343A40;
+  --text-secondary: #6C757D;
+  --accent-primary: #0D6EFD;
+  --accent-secondary: #198754;
+  --color-error: #DC3545;
+  --color-success: #198754;
+  --btn-hover: #0B5ED7;
+}
+
+h1, h2, h3, p {
+    color: var(--text-main);
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+p {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+h4 {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto';
+}
