@@ -1,0 +1,51 @@
+<?php 
+require 'koneksi.php';
+require 'util.php';
+
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+if($_SERVER['REQUEST_METHOD'] === 'OPTIONS'){
+    exit;
+}else if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $request = file_get_contents('php://input');
+
+    $loginInput = json_decode($request, true);
+    
+    if(!isset($loginInput['username']) || !isset($loginInput['password'])){
+        echo returnMessage(false, 'Data login tidak lengkap');
+        exit;
+    }
+    
+    $username = $loginInput['username'];
+    $password = $loginInput['password'];
+
+    //VALIDASI INPUT
+    validateInput($username, $password);
+
+    //CEK APAKAH DATA LOGIN ADA
+    $query = 'SELECT password FROM users WHERE username = ?';
+    $statement = $conn->prepare($query);
+    $statement->bind_param('s', $username);
+    $statement->execute();
+
+    $result = $statement->get_result();
+    if($result->num_rows > 0){
+        $row = $result->fetch_assoc();
+        $passwordFromDatabase = $row['password'];
+
+        if(password_verify($password, $passwordFromDatabase)){
+            echo returnMessage(true, 'Login berhasil');
+        }else{
+            echo returnMessage(false, 'Username atau Password salah');
+        }
+    }else{
+        echo returnMessage(false, 'Username atau Password salah');
+    }
+
+    $statement->close();
+    $conn->close();
+}
+?>

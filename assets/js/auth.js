@@ -37,7 +37,9 @@ loginForm.addEventListener('submit', function(e){
     let usernameInput = usernameInputLogin.value.trim();
     let passwordInput = passwordInputLogin.value.trim();
 
-    checkUsernameAndPassword(usernameInput, passwordInput);
+    if(checkUsernameAndPassword(usernameInput, passwordInput)){
+        registerAndLogin(usernameInput, passwordInput);
+    }
 });
 
 registerForm.addEventListener('submit', async function(e){
@@ -47,13 +49,15 @@ registerForm.addEventListener('submit', async function(e){
     let passwordInput = passwordInputRegister.value.trim();
 
     if(checkUsernameAndPassword(usernameInput, passwordInput)){
-        register(usernameInput, passwordInput);
+        registerAndLogin(usernameInput, passwordInput);
     }
 });
 
-async function register(usernameInput, passwordInput){
+async function registerAndLogin(usernameInput, passwordInput){
+    const pathAuth = isLoginPage ? 'php/login.php' : 'php/register.php';
+
     try {
-        const response = await fetch('php/register.php', {
+        const response = await fetch(pathAuth, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -66,13 +70,17 @@ async function register(usernameInput, passwordInput){
         }
 
         const hasil = await response.json();
-        if(!hasil.success){
-            showNotification(hasil.message, 'error');
-        }else{
+        showNotification(hasil.message, hasil.success ? 'success' : 'error');
+
+        if(!isLoginPage){
             usernameInputRegister.value = '';
             passwordInputRegister.value = '';
-            showNotification(hasil.message, 'success');
-            changePage();
+            if(hasil.success){
+                changePage();
+            }
+        }else {
+            usernameInputLogin.value = '';
+            passwordInputLogin.value = '';
         }
 
     } catch (error) {

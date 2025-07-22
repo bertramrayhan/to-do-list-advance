@@ -1,34 +1,11 @@
 <?php 
-require_once 'koneksi.php';
+require 'koneksi.php';
+require 'util.php';
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
-
-function returnMessage(bool $isSuccess, string $message) {
-    return json_encode(['success' => $isSuccess, 'message' => $message]);
-}
-
-function validateInput(string $username, string $password) {
-    if(mb_strlen($username) < 4){
-        echo returnMessage(false, 'Username minimal 4 karakter');
-        exit;
-    }else if(mb_strlen($username) > 50){
-        echo returnMessage(false, 'Username maksimal 25 karakter');
-        exit;
-    }else if(!preg_match('/^[a-zA-Z0-9_\.]+$/', $username)){
-        echo returnMessage(false, 'Username hanya boleh menggunakan abjad (a-z), angka, garis bawah (_), dan titik (.)');
-        exit;
-    }
-    if(mb_strlen($password) < 8){
-        echo returnMessage(false, 'Password minimal 8 karekter');
-        exit;
-    }else if(mb_strlen($password) > 50){
-        echo returnMessage(false, 'Password maksimal 50 karakter');
-        exit;
-    }
-}
 
 if($_SERVER['REQUEST_METHOD'] === 'OPTIONS'){
     exit;
@@ -65,5 +42,8 @@ if($_SERVER['REQUEST_METHOD'] === 'OPTIONS'){
     }else {
         echo returnMessage(false, 'Data tidak berhasil disimpan, coba lagi');
     }
+
+    $statement->close();
+    $conn->close();
 }
 ?>
