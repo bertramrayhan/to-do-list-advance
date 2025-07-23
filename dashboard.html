@@ -55,14 +55,14 @@
     <main>
         <div id="main-container">
             <div id="main-header">
-                <h2>Halo, [Nama Pengguna]</h2>
+                <h2>Halo, <span id="username"></span></h2>
                 <button id="add-task-btn">+ Tambah Tugas Baru</button>
             </div>
 
             <div id="main-container-cards-task">
-                <!-- <h3>Anda belum memiliki tugas. Ayo buat yang pertama!</h3> -->
+                <h3 id="main-container-cards-task-text">Anda belum memiliki tugas. Ayo buat yang pertama!</h3>
                 
-                <div class="card-task">
+                <!-- <div class="card-task">
                     <div class="card-task-left">
                         <input type="checkbox" name="status-task-cbx" class="status-task-cbx">
                         <div class="card-task-text">
@@ -79,10 +79,11 @@
                             <use href="#delete"></use>
                         </svg>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </main>
 
+    <script src="assets/js/dashboard.js"></script>
 </body>
 </html>

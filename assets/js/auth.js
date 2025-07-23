@@ -81,6 +81,11 @@ async function registerAndLogin(usernameInput, passwordInput){
         }else {
             usernameInputLogin.value = '';
             passwordInputLogin.value = '';
+            console.log('tes');
+            if(hasil.success){
+                console.log('masuk');
+                window.location.href = 'dashboard.html';
+            }
         }
 
     } catch (error) {

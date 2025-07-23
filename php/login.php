@@ -26,7 +26,7 @@ if($_SERVER['REQUEST_METHOD'] === 'OPTIONS'){
     validateInput($username, $password);
 
     //CEK APAKAH DATA LOGIN ADA
-    $query = 'SELECT password FROM users WHERE username = ?';
+    $query = 'SELECT id_user, password FROM users WHERE username = ?';
     $statement = $conn->prepare($query);
     $statement->bind_param('s', $username);
     $statement->execute();
@@ -37,6 +37,14 @@ if($_SERVER['REQUEST_METHOD'] === 'OPTIONS'){
         $passwordFromDatabase = $row['password'];
 
         if(password_verify($password, $passwordFromDatabase)){
+            session_start();
+            session_regenerate_id(true);
+
+            session_unset();
+
+            $_SESSION['id_user'] = $row['id_user'];
+            $_SESSION['username'] = $username;
+
             echo returnMessage(true, 'Login berhasil');
         }else{
             echo returnMessage(false, 'Username atau Password salah');

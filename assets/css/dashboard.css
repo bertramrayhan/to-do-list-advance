@@ -76,6 +76,7 @@ main {
 }
 
 #main-container-cards-task #main-container-cards-task-text {
+    display: none;
     text-align: center;
 }
 
