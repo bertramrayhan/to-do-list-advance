@@ -75,8 +75,7 @@ main {
     gap: 20px;
 }
 
-#main-container-cards-task #main-container-cards-task-text {
-    display: none;
+#main-container-cards-task-text {
     text-align: center;
 }
 
@@ -101,6 +100,10 @@ main {
     display: flex;
     flex-direction: column;
     gap: 7px;
+}
+
+.title.completed {
+    text-decoration: line-through;
 }
 
 .card-task-action {

@@ -1,6 +1,8 @@
+import { loadTasks } from "./manageTasks.js";
+import { showNotification } from "./notification.js";
+
 document.addEventListener('DOMContentLoaded', function(e) {
     checkLoginStatus();
-    loadTasks();
 })
 
 async function checkLoginStatus() {
@@ -16,6 +18,8 @@ async function checkLoginStatus() {
         const confirmation = await response.json();
         if(confirmation.loggedIn){
             document.getElementById('username').textContent = confirmation.username + '!';
+            getTasks();
+
         }else {
             window.location.href = 'login.html';
         }
@@ -52,7 +56,7 @@ async function logout(){
     }
 }
 
-async function loadTasks(){
+export async function getTasks(){
     try {
         const response = await fetch('php/sendTasks.php', {
             method: 'GET'
@@ -67,9 +71,49 @@ async function loadTasks(){
         if(!hasil.success){
             console.log(hasil.message);
         }else {
-            for (const task of hasil.tasks) {
-                console.log(task.title);
-            }
+            loadTasks(hasil.tasks);
+        }
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+document.getElementById('main-container-cards-task').addEventListener('click', function(e){
+    e.preventDefault();
+
+    const btnDelete = e.target.closest('.delete-btn');
+
+    if(btnDelete){
+        console.log('Button found:', btnDelete);
+        console.log('Dataset:', btnDelete.dataset);
+        const idTask = btnDelete.dataset['idTask'];
+        console.log('ID Task:', idTask);
+        if (confirm('Apakah Anda yakin ingin menghapus tugas ini?')) {
+            deleteTask(idTask);
+        }
+    }
+});
+async function deleteTask(idTask){
+    try {
+        const response = await fetch('php/deleteTask.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({idTask: idTask})
+        });
+
+        if(!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const confirmation = await response.json();
+        if(confirmation.success){
+            await getTasks();
+            showNotification('Task berhasil dihapus!', 'success');
+        }else {
+            showNotification('Task gagal dihapus', 'error');
         }
 
     } catch (error) {

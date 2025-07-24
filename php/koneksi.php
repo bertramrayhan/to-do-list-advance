@@ -1,9 +1,14 @@
 <?php
-    require 'secret.php';
+require 'secret.php';
 
-    $conn = new mysqli($host, $user, $password, $database);
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
 
-    if($conn->connect_error){
-        die("Koneksi gagal: " . $conn->connect_error);
-    }
+$conn = new mysqli($host, $user, $password, $database);
+
+if($conn->connect_error){
+    die("Koneksi gagal: " . $conn->connect_error);
+}
 ?>
