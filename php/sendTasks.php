@@ -9,17 +9,9 @@ header('Access-Control-Allow-Headers: Content-Type');
 
 session_start();
 
-if(!isset($_SESSION['id_user'])){
-    http_response_code(401); // unauthorized
-    echo returnMessage(false, 'Akses ditolak. Silahkan login terlebih dahulu');
-    exit;
-}
+if(!checkIdUser()){exit;}
 
-if($_SERVER['REQUEST_METHOD'] !== 'GET'){
-    http_response_code(405); //method not allowed
-    echo returnMessage(false, 'Method tidak diizinkan');
-    exit;
-}
+if(!checkRequestMethod('GET')){exit;}
 
 $currentIdUser = $_SESSION['id_user'];
 

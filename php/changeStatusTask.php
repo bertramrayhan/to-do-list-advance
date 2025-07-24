@@ -19,16 +19,17 @@ if(!checkDataIfEmpty($data)){exit;}
 
 $currentIdUser = $_SESSION['id_user'];
 $idTask = $data['idTask'];
+$statusTask = $data['statusTask'] ? 1 : 0;
 
-$query = 'DELETE FROM tasks WHERE id_user =? AND id_task=?';
+$query = 'UPDATE tasks SET status=? WHERE id_user=? AND id_task=?';
 $statement = $conn->prepare($query);
-$statement->bind_param('ss', $currentIdUser, $idTask);
+$statement->bind_param('iss', $statusTask, $currentIdUser, $idTask);
 $statement->execute();
 
 if($statement->affected_rows > 0){
-    echo returnMessage(true, 'Task berhasil dihapus');
+    echo returnMessage(true, 'Status task berhasil diubah');
 }else {
-    echo returnMessage(false, 'Task gagal dihapus');
+    echo returnMessage(false, 'Status task gagal diubah');
 }
 
 $statement->close();

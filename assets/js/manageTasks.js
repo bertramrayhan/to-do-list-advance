@@ -15,6 +15,7 @@ export function loadTasks(tasks){
 
         const checkbox = cardTaskClone.querySelector('.status-task-cbx');
         checkbox.checked = task.status === 1;
+        checkbox.setAttribute('data-id-task', task['id_task']);
 
         const title = cardTaskClone.querySelector('.title');
         title.textContent = task.title;

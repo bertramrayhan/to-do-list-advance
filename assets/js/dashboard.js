@@ -80,11 +80,12 @@ export async function getTasks(){
 }
 
 document.getElementById('main-container-cards-task').addEventListener('click', function(e){
-    e.preventDefault();
-
     const btnDelete = e.target.closest('.delete-btn');
+    const checkboxStatus = e.target.closest('.status-task-cbx');
 
     if(btnDelete){
+        e.preventDefault();
+
         console.log('Button found:', btnDelete);
         console.log('Dataset:', btnDelete.dataset);
         const idTask = btnDelete.dataset['idTask'];
@@ -92,6 +93,11 @@ document.getElementById('main-container-cards-task').addEventListener('click', f
         if (confirm('Apakah Anda yakin ingin menghapus tugas ini?')) {
             deleteTask(idTask);
         }
+    }
+    if(checkboxStatus){
+        const idTask = checkboxStatus.dataset['idTask'];
+        console.log('ID Task:', idTask);
+        changeStatusTask(checkboxStatus, idTask);
     }
 });
 async function deleteTask(idTask){
@@ -118,5 +124,38 @@ async function deleteTask(idTask){
 
     } catch (error) {
         console.error(error);
+    }
+}
+
+async function changeStatusTask(checkboxStatus, idTask){
+    const cardTask = checkboxStatus.closest('.card-task');
+    const title = cardTask.querySelector('.title');
+
+    checkboxStatus.checked ? title.classList.add('completed') : title.classList.remove('completed');
+
+    try {
+        const response  = await fetch('php/changeStatusTask.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({idTask: idTask, statusTask: checkboxStatus.checked})
+        })
+
+        if(!response.ok){
+            throw new Error(`HTTP error! status ${response.status}`);
+        }
+
+        const konfirmasi = await response.json();
+        if(!konfirmasi.success){
+            checkboxStatus.checked = !checkboxStatus.checked;
+            checkboxStatus.checked ? title.classList.add('completed') : title.classList.remove('completed');
+            console.log(konfirmasi.message);
+        }
+
+    } catch (error) {
+        console.error(error);
+        checkboxStatus.checked = !checkboxStatus.checked;
+        checkboxStatus.checked ? title.classList.add('completed') : title.classList.remove('completed');
     }
 }

@@ -59,4 +59,35 @@ function validateInput(string $username, string $password) {
         exit;
     }
 }
+
+function checkIdUser(){
+    session_start();
+    
+    if(!isset($_SESSION['id_user'])){
+        http_response_code(401);
+        echo returnMessage(false, 'Akses ditolak. Silahkan login terlebih dahulu');
+        return false;
+    }
+    
+    return true;
+}
+
+function checkRequestMethod($allowedMethod){
+    if($_SERVER['REQUEST_METHOD'] !== $allowedMethod){
+        http_response_code(405); //method not allowed
+        echo returnMessage(false, 'Method tidak diizinkan');
+        return false;
+    }
+    return true;
+}
+
+function checkDataIfEmpty(array $inputData) {
+    foreach ($inputData as $key => $value) {
+        if (!isset($value) || (is_string($value) && trim($value) === "")) {
+            echo returnMessage(false, "Data '" . $key . "' tidak boleh kosong.");
+            return false;
+        }
+    }
+    return true;
+}
 ?>
