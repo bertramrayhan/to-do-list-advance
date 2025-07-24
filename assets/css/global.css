@@ -49,6 +49,67 @@ h4 {
     font-family: 'Roboto';
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-container);
+    padding: 26px;
+    border-radius: 12px;
+    gap: 28px;
+    width: 360px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 
+                0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.container.hidden {
+    display: none;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #c8cbce;
+    outline: none;
+}
+
+.input:focus {
+    border: 1px solid var(--accent-primary);
+}
+
+.btn {
+    width: 95px;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: var(--accent-primary);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.btn:hover {
+    background-color: var(--btn-hover);
+}
+
+.btn:active {
+    transform: scale(0.9);
+}
+
 #notification {
     background-color: var(--color-error);
     position: fixed;

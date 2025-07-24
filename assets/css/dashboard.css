@@ -114,3 +114,51 @@ main {
 .card-task-action svg {
     cursor: pointer;
 }
+
+#add-task-container {
+    z-index: 999;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#add-task-container-btn {
+    display: flex;
+    gap: 15px;
+}
+
+#description-input {
+    resize: none;
+}
+
+.container {
+    gap: 35px;
+}
+
+.form {
+    gap: 35px;
+}
+
+#modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 998;  /* Di bawah modal */
+}
+
+#modal-backdrop.hidden {
+    display: none;
+}
+
+#cancel-btn {
+    background-color: var(--bg-container); /* Putih */
+    color: var(--text-secondary); /* Abu-abu */
+    border: 1px solid #c8cbce; /* Border abu-abu terang */
+}
+
+/* Efek hover untuk tombol sekunder */
+#cancel-btn:hover {
+    background-color: #f8f9fa; /* Abu-abu sangat terang, hampir tidak terlihat */
+    color: var(--text-main); /* Teks menjadi lebih gelap agar terlihat aktif */
+}

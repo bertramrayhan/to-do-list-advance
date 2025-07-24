@@ -60,9 +60,7 @@ function validateInput(string $username, string $password) {
     }
 }
 
-function checkIdUser(){
-    session_start();
-    
+function checkIdUser(){    
     if(!isset($_SESSION['id_user'])){
         http_response_code(401);
         echo returnMessage(false, 'Akses ditolak. Silahkan login terlebih dahulu');

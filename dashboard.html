@@ -67,6 +67,28 @@
         </div>
     </main>
 
+    <div id="modal-backdrop" class="hidden"></div>
+
+    <div id="add-task-container" class="container hidden">
+        <h1>Buat Tugas Baru</h1>
+
+        <form id="add-task-form" class="form">
+            <div class="input-container">
+                <label for="title-input">Judul</label>
+                <input type="text" name="title-input" id="title-input" placeholder="Masukkan judul..." class="input" required>
+            </div>
+            <div class="input-container">
+                <label for="description-input">Deskripsi</label>
+                <textarea name="description-input" id="description-input" placeholder="Masukkan deskripsi..." class="input" required></textarea>
+            </div>
+
+            <div id="add-task-container-btn">
+                <button id="save-btn" class="btn">Simpan</button>
+                <button id="cancel-btn" class="btn">Batal</button>
+            </div>
+        </form>
+    </div>
+
     <div id="notification">
         <h4 id="notification-message">Pesan</h4>
     </div>

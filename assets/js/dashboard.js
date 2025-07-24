@@ -1,15 +1,30 @@
 import { loadTasks } from "./manageTasks.js";
 import { showNotification } from "./notification.js";
 
+function makeResponse(body = undefined){
+    if(body === undefined){
+        return {
+            method: 'GET'
+        }
+    }else {
+        return {
+            method: 'POST',
+            header: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        }
+    }
+}
+
+//LOGIN PAGE
 document.addEventListener('DOMContentLoaded', function(e) {
     checkLoginStatus();
 })
 
 async function checkLoginStatus() {
     try {
-        const response = await fetch('php/checkSession.php', {
-            method: 'GET'
-        });
+        const response = await fetch('php/checkSession.php', makeResponse());
 
         if(!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -36,9 +51,7 @@ document.getElementById('logout-btn').addEventListener('click', function(){
 
 async function logout(){
     try {
-        const response = await fetch('php/logout.php', {
-            method: 'GET'
-        });
+        const response = await fetch('php/logout.php', makeResponse());
 
         if(!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -58,9 +71,7 @@ async function logout(){
 
 export async function getTasks(){
     try {
-        const response = await fetch('php/sendTasks.php', {
-            method: 'GET'
-        });
+        const response = await fetch('php/sendTasks.php', makeResponse());
 
         const hasil = await response.json();
 
@@ -102,13 +113,7 @@ document.getElementById('main-container-cards-task').addEventListener('click', f
 });
 async function deleteTask(idTask){
     try {
-        const response = await fetch('php/deleteTask.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({idTask: idTask})
-        });
+        const response = await fetch('php/deleteTask.php', makeResponse({idTask: idTask}));
 
         if(!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -134,13 +139,7 @@ async function changeStatusTask(checkboxStatus, idTask){
     checkboxStatus.checked ? title.classList.add('completed') : title.classList.remove('completed');
 
     try {
-        const response  = await fetch('php/changeStatusTask.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({idTask: idTask, statusTask: checkboxStatus.checked})
-        })
+        const response = await fetch('php/changeStatusTask.php', makeResponse({idTask: idTask, statusTask: checkboxStatus.checked}));
 
         if(!response.ok){
             throw new Error(`HTTP error! status ${response.status}`);
@@ -157,5 +156,59 @@ async function changeStatusTask(checkboxStatus, idTask){
         console.error(error);
         checkboxStatus.checked = !checkboxStatus.checked;
         checkboxStatus.checked ? title.classList.add('completed') : title.classList.remove('completed');
+    }
+}
+
+//ADD TASK MODAL
+let addTaskContainer = document.getElementById('add-task-container');
+let modalBackdrop = document.getElementById('modal-backdrop');
+document.getElementById('add-task-btn').addEventListener('click', function(e){
+    if(addTaskContainer.classList.contains('hidden')){
+        addTaskContainer.classList.remove('hidden');
+        modalBackdrop.classList.remove('hidden');
+    }
+});
+
+document.getElementById('cancel-btn').addEventListener('click', function(){
+    addTaskContainer.classList.add('hidden');
+    modalBackdrop.classList.add('hidden');
+    document.getElementById('title-input').value = '';
+    document.getElementById('description-input').value = '';
+});
+
+document.getElementById('add-task-form').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    addTask();
+    e.target.reset();
+})
+async function addTask(){
+    const title = document.getElementById('title-input').value.trim();
+    const description = document.getElementById('description-input').value.trim();
+
+    if(title === '' || description === ''){
+        showNotification('Judul atau deskripsi tidak terisi', 'error');
+        return;
+    }
+
+    try {
+        const response = await fetch('php/addTask.php', makeResponse({title: title, description: description}));
+
+        if(!response.ok){
+            throw new Error(`HTTP error!. status ${response.status}`);
+        }
+
+        const konfirmasi = await response.json();
+        if(konfirmasi.success){
+            await getTasks();
+            addTaskContainer.classList.add('hidden');
+            modalBackdrop.classList.add('hidden');
+            showNotification(konfirmasi.message, 'success');
+        }else {
+            showNotification(konfirmasi.message, 'error');
+        }
+
+    } catch (error) {
+        console.error(error);
     }
 }
