@@ -17,6 +17,7 @@ $request = file_get_contents('php://input');
 $data = json_decode($request, true);
 if(!checkDataIfEmpty($data)){exit;}
 
+trimDatas($data);
 $currentIdUser = $_SESSION['id_user'];
 $idTask = $data['idTask'];
 $statusTask = $data['statusTask'] ? 1 : 0;

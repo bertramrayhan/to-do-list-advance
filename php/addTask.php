@@ -17,6 +17,7 @@ $request = file_get_contents('php://input');
 $data = json_decode($request, true);
 if(!checkDataIfEmpty($data)){exit;}
 
+trimDatas($data);
 $newIdTask = generateNewId($conn, 'id_task', 'tasks', 'task', 3);
 $currentIdUser = $_SESSION['id_user'];
 $title = $data['title'];

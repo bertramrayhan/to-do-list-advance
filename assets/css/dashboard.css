@@ -120,7 +120,12 @@ main {
     position: fixed;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.9);
+    transition: transform 0.2s ease-out;
+}
+
+#add-task-container.show {
+    transform: translate(-50%, -50%) scale(1);
 }
 
 #add-task-container-btn {
@@ -134,6 +139,13 @@ main {
 
 .container {
     gap: 35px;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.container.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .form {

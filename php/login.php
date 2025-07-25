@@ -13,12 +13,15 @@ if($_SERVER['REQUEST_METHOD'] === 'OPTIONS'){
     $request = file_get_contents('php://input');
 
     $loginInput = json_decode($request, true);
-    
-    if(!isset($loginInput['username']) || !isset($loginInput['password'])){
-        echo returnMessage(false, 'Data login tidak lengkap');
-        exit;
+
+    foreach ($loginInput as $key => $value) {
+        if (!isset($value) || (is_string($value) && trim($value) === "")) {
+            echo returnMessage(false, 'Data login tidak lengkap');
+            exit;
+        }
     }
     
+    trimDatas($loginInput);
     $username = $loginInput['username'];
     $password = $loginInput['password'];
 

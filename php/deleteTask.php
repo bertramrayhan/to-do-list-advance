@@ -18,7 +18,7 @@ $data = json_decode($request, true);
 if(!checkDataIfEmpty($data)){exit;}
 
 $currentIdUser = $_SESSION['id_user'];
-$idTask = $data['idTask'];
+$idTask = trim($data['idTask']);
 
 $query = 'DELETE FROM tasks WHERE id_user =? AND id_task=?';
 $statement = $conn->prepare($query);

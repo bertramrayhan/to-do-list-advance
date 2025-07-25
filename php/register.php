@@ -13,12 +13,15 @@ if($_SERVER['REQUEST_METHOD'] === 'OPTIONS'){
     $request = file_get_contents('php://input');
 
     $registerInput = json_decode($request, true);
-    
-    if(!isset($registerInput['username']) || !isset($registerInput['password'])){
-        echo returnMessage(false, 'Data register tidak lengkap');
-        exit;
+
+    foreach ($registerInput as $key => $value) {
+        if (!isset($value) || (is_string($value) && trim($value) === "")) {
+            echo returnMessage(false, 'Data register tidak lengkap');
+            exit;
+        }
     }
     
+    trimDatas($registerInput);
     $username = $registerInput['username'];
     $password = $registerInput['password'];
 

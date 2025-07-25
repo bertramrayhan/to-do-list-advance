@@ -93,28 +93,11 @@ async function registerAndLogin(usernameInput, passwordInput){
     }
 }
 
-function checkUsernameAndPassword(usernameInput, passwordInput) {
-    console.log(usernameInput);
-    console.log(passwordInput);
-
-    if(usernameInput.length < 4){
-        showNotification('Username minimal 4 karakter', 'error');
-        return false;
-    }else if(usernameInput.length > 25){
-        showNotification('Username maksimal 25 karakter', 'error')
-        return false;
-    }else if(!/^[a-zA-Z0-9_\.]+$/.test(usernameInput)){
-        showNotification('Username hanya boleh menggunakan abjad (a-z), angka, garis bawah (_), dan titik (.)', 'error');
+function checkUsernameAndPassword(username, password) {
+    if (!username || !password) { // Hanya cek keberadaan dasar
+        showNotification('Username dan password harus diisi', 'error');
         return false;
     }
-    if(passwordInput.length < 8){
-        showNotification('Password minimal 8 karakter', 'error')
-        return false;
-    }else if(passwordInput.length > 50){
-        showNotification('Password maksimal 50 karakter', 'error')
-        return false;
-    }
-
     return true;
 }
 

@@ -88,4 +88,19 @@ function checkDataIfEmpty(array $inputData) {
     }
     return true;
 }
+
+function trimDatas(array &$inputData){
+    foreach ($inputData as $key => $value) {
+        if (is_string($value)) {
+            $inputData[$key] = trim($value);
+        }
+    }
+}
+
+function handlePreflightRequest() {
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        header('HTTP/1.1 204 No Content');
+        exit;
+    }
+}
 ?>

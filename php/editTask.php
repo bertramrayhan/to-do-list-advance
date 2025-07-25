@@ -17,10 +17,11 @@ $request = file_get_contents('php://input');
 $data = json_decode($request, true);
 if(!checkDataIfEmpty($data)){exit;}
 
-$idTask = trim($data['idTask']);
+trimDatas($data);
+$idTask = $data['idTask'];
 $currentIdUser = $_SESSION['id_user'];
-$title = trim($data['title']);
-$description = trim($data['description']);
+$title = $data['title'];
+$description = $data['description'];
 
 $query = 'UPDATE tasks SET title=?, description=? WHERE id_task=? AND id_user=?';
 $statement = $conn->prepare($query);
