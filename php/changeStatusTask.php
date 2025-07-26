@@ -7,6 +7,8 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
+handlePreflightRequest();
+
 session_start();
 
 if(!checkIdUser()){exit;}
@@ -20,6 +22,11 @@ if(!checkDataIfEmpty($data)){exit;}
 trimDatas($data);
 $currentIdUser = $_SESSION['id_user'];
 $idTask = $data['idTask'];
+
+if (!isset($data['statusTask']) || !is_bool($data['statusTask'])) {
+    echo returnMessage(false, 'Data status tidak valid.');
+    exit;
+}
 $statusTask = $data['statusTask'] ? 1 : 0;
 
 $query = 'UPDATE tasks SET status=? WHERE id_user=? AND id_task=?';

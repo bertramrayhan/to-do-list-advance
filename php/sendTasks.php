@@ -7,6 +7,8 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
+handlePreflightRequest();
+
 session_start();
 
 if(!checkIdUser()){exit;}
@@ -35,4 +37,5 @@ if($result->num_rows > 0){
 }
 
 $statement->close();
+$conn->close();
 ?>
